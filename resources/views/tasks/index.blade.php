@@ -1,29 +1,20 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- <script src="{{ asset('js/app.js') }}" defer></script> -->
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css' />
-    
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -84,9 +75,59 @@
             </div>
         </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+    <div class="container">
+        <div class="row">
+            <div class= "col-md-8" id="calendar"></div>
+            <div class="col-md-4">
+            <form action="/guides/{{$guide->id}}/tasks" method="post">
+                {{ csrf_field() }}
+                Task name:
+                <br />
+                <input type="text" name="name" />
+                <br /><br />
+                Task description:
+                <br />
+                <textarea name="description"></textarea>
+                <br /><br />
+                Start time:
+                <br />
+                <input type="text" name="task_date" class="date" />
+                <br /><br />
+                <input type="submit" value="Save" />
+                </form>
+
+                <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+                <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+                    <script>
+                        $('.date').datepicker({
+                            autoclose: true,
+                            dateFormat: "yy-mm-dd"
+                        });
+                </script>
+            </div>
+        </div>
     </div>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js'></script>
+
+    <script>
+        $(document).ready(function() {
+            // page is now ready, initialize the calendar...
+            $('#calendar').fullCalendar({
+                // put your options and callbacks here
+                events : [
+                    @foreach($tasks as $task)
+                    {
+                        title : '{{ $task->name }}',
+                        start : '{{ $task->task_date }}',
+                        
+                    },
+                    @endforeach
+                ]
+            })
+        });
+    </script>
+
 </body>
 </html>

@@ -18,7 +18,12 @@ class CreateGuidesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('fname');
             $table->string('lname');
+            $table->string('license_key')->nullable();
+            $table->date('license_expire_at')->nullable();
             $table->string('contact_no');
+            $table->string('category');
+            $table->text('description');
+            $table->string('dp_url');
             $table->timestamps();
         });
     }

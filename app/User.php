@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use App\Tourist;
 use App\Guide;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -41,8 +41,7 @@ class User extends Authenticatable
 
     public function hasRole($role)
     {
-        $role = Auth::user()->role;
-        if (Auth::user()->where('role', $role)) {
+        if ($this->where('role', $role)) {
             return true;
         } else {
             return false;

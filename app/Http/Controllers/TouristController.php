@@ -18,7 +18,6 @@ class TouristController extends Controller
     {
 
         $tourist->load('user');
-        /* dd($tourist); */
         return view('tourist.show', compact('tourist'));
     }
 }
