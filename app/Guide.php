@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Post;
+use App\Review;
 
 class Guide extends Model
 {
@@ -18,5 +19,10 @@ class Guide extends Model
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function reviews()
+    { 
+        return $this->hasMany(Review::class);
     }
 }

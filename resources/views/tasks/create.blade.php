@@ -20,7 +20,7 @@
     <br /><br />
     Start time:
     <br />
-    <input type="text" name="task_date" class="date" />
+    <input type="text" name="sdate" class="date" />
     <br /><br />
     <input type="submit" value="Save" />
     </form>

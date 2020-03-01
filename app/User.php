@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use App\Tourist;
 use App\Guide;
 
+// implements MustVerifyEmail   for email verification
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;

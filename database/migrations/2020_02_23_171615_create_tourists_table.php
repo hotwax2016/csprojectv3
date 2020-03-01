@@ -16,10 +16,10 @@ class CreateTouristsTable extends Migration
         Schema::create('tourists', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->string('fname');
-            $table->string('lname');
-            $table->string('contact_no');
-            $table->string('dp_url');
+            $table->string('fname')->nullable();
+            $table->string('lname')->nullable();
+            $table->string('contact_no')->nullable();
+            $table->string('dp_url')->nullable();
             $table->timestamps();
         });
     }

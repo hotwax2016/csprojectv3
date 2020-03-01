@@ -27,11 +27,12 @@ class TasksController extends Controller
     {
         /* dd(Auth::id()); */
         $data = [
-            'tourist_id' => Auth::id(),
+            'tourist_id' => Auth::user()->tourist->id,
             'guide_id' => $guide->id,
         ];
         /* dd(array_merge($request->all(), $data)); */
         $vals = array_merge($request->all(), $data);
+/*         dd($vals); */
         Task::create($vals);
         /* return redirect()->route('tasks.index'); */
         Mail::to($guide->user->email)->send(new NewTaskCreatedGuide());

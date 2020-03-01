@@ -16,8 +16,12 @@ class TouristController extends Controller
 
     public function show(Tourist $tourist)
     {
-
         $tourist->load('user');
         return view('tourist.show', compact('tourist'));
+    }
+
+    public function store(Request $request)
+    {
+        
     }
 }

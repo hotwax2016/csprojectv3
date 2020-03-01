@@ -19,7 +19,8 @@ class CreateTasksTable extends Migration
             $table->unsignedBigInteger('guide_id');
             $table->string('name');
             $table->text('description')->nullable();
-            $table->date('task_date');
+            $table->date('sdate');
+            $table->date('edate');
             $table->boolean('conform')->default(false);
             $table->timestamps();
         });

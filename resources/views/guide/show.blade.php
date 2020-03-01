@@ -11,6 +11,9 @@
                     <li class="nav-item">
                         <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Contact Info</a>
                     </li>
+                    <li class="nav-item">
+                        <a href="" data-target="#reviews" data-toggle="tab" class="nav-link">Reviews</a>
+                    </li>
                 </ul>
                 <div class="tab-content py-4">
                     <div class="tab-pane active" id="profile">
@@ -19,7 +22,7 @@
                                 <h5 class="mb-3">{{$guide->fname}}'s Profile</h5>
                             </div>
                             <div class="col-md-6">
-                                @if (Auth::user()->role == 'guide')
+                                @if(Auth::user()->role == 'guide')
                                     <a href="" class="btn btn-primary">Create Post</a>
                                 @endif
                                 <a href="/guides/{{$guide->id}}/tasks" class="btn btn-primary">Make Appoinment</a>
@@ -46,8 +49,20 @@
                                 <span class="badge badge-primary"><i class="fa fa-user"></i> 900 Followers</span>
                                 <span class="badge badge-success"><i class="fa fa-cog"></i> 43 posts</span>
                             </div>
-                            <div class="col-md-12">
-                                <h3>Recent Activities</h3>
+                            <div class="col-md-12 my-5">
+                                <h3 mb-5>Reviews</h3>
+                                @forelse ($guide->reviews as $review)
+                                <div class="media border p-3">
+                                    <img src="" alt="" class="mr-3 mt-3 rounded-circle" style="width:60px;">
+                                    <div class="media-body">
+                                        <h4> <small><i>Posted on {{$review->created_at}}</i></small></h4>
+                                        <p>{{$review->description}}</p>
+                                    </div>
+                                </div>
+                                @empty
+                                    <h5>No reviews Yet!</h3>
+                                @endforelse
+
                             </div>
                         </div>
                         <!--/row-->
@@ -59,31 +74,31 @@
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">First name</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="">
+                                    <input class="form-control" type="text" value="{{$guide->fname}}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">Last name</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="">
+                                    <input class="form-control" type="text" value="{{$guide->lname}}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">Email</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="email" value="">
+                                    <input class="form-control" type="email" value="{{$guide->user->email}}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">License Key </label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="">
+                                    <input class="form-control" type="text" value="{{$guide->license_key}}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">License Expire At</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="date" value="">
+                                    <input class="form-control" type="date" value="{{$guide->license_expire_at}}">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -106,12 +121,34 @@
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label"></label>
                                 <div class="col-lg-9">
-                                    <input type="reset" class="btn btn-secondary" value="Cancel">
-                                    <input type="submit" class="btn btn-primary" value="Save Changes">
+                                    @if (Auth::id() == $guide->user->id)
+                                        <input type="reset" class="btn btn-secondary" value="Cancel">
+                                        <input type="submit" class="btn btn-primary" value="Save Changes">
+                                    @endif
                                 </div>
                             </div>
                         </form>
                     </div>
+                        <div class="tab-pane" id="reviews">
+                            <div id="respond">
+                                <h3>Leave a Comment</h3>
+
+                                <form action="/{{$guide->id}}/reviews" method="post">
+                                @csrf
+                                <label for="comment_author" class="required">Your name</label></br>
+                                <input type="text" name="comment_author" id="comment_author" value="" tabindex="1" required="required">
+                                </br></br>
+                                <label for="email" class="required">Your email;</label></br>
+                                <input type="email" name="email" id="email" value="" tabindex="2" required="required">
+                                </br></br>
+                                <label for="comment" class="required">Your message</label></br>
+                                <textarea name="comment" id="comment" rows="10" tabindex="4"  required="required"></textarea>
+                                </br></br>
+                                <input name="submit" type="submit" value="Submit comment" />
+
+                                </form>
+                            </div>
+                        </div>
                 </div>
             </div>
             <div class="col-lg-4 order-lg-1 text-center">

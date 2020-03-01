@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+/* Route::get('/home', 'HomeController@index')->name('home'); */
 
 Route::get('/tourists', 'TouristController@index');
 Route::get('/tourists/{tourist}', 'TouristController@show');
@@ -29,6 +29,13 @@ Route::patch('/tourists/{tourist}', 'TouristController@update');
 Route::get('/guides', 'GuideController@index');
 Route::get('/guides/{guide}', 'GuideController@show');
 Route::patch('/guides/{guide}', 'GuideController@update');
+
+
+Route::get('/guides/{guide}/tasks', 'TasksController@index');
+Route::get('/guides/{guide}/tasks/create', 'TasksController@create');
+Route::post('/guides/{guide}/tasks', 'TasksController@store');
+
+Route::post('/{guide}/reviews', 'ReviewController@store');
 
 Route::get('/posts', 'PostController@index');
 
@@ -39,8 +46,3 @@ Route::get('/create', function () {
 Route::get('/tasks', function () {
     return view('tasks.index');
 });
-
-/* Route::resource('tasks', 'TasksController'); */
-Route::get('/guides/{guide}/tasks', 'TasksController@index');
-Route::get('/guides/{guide}/tasks/create', 'TasksController@create');
-Route::post('/guides/{guide}/tasks', 'TasksController@store');

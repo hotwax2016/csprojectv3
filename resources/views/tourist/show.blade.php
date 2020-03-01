@@ -16,7 +16,13 @@
                     <div class="tab-pane active" id="profile">
                         <div class="row mb-4">
                             <div class="col-md-6">
-                                <h5 class="mb-3">{{$tourist->fname}}'s Profile</h5>
+                                <h5 class="mb-3">
+                                    @if ($tourist->fname != null)
+                                        {{$tourist->fname}}'s Profile
+                                    @else 
+                                        {{$tourist->user->name}}'s Profile
+                                    @endif
+                                </h5>
                             </div>
                             <!-- <div class="col-md-6">
                                 <a href="" class="btn btn-primary">Create Post</a>
@@ -49,25 +55,25 @@
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">First name</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="">
+                                    <input class="form-control" name="fname" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">Last name</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="">
+                                    <input class="form-control" name="lname" type="text" value="">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">Email</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="email" value="">
+                                    <input class="form-control" name="email" type="email" value="">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">Contact No</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="tel" value="">
+                                    <input class="form-control" name="contac_no" type="tel" value="">
                                 </div>
                             </div>
                             <div class="form-group row">
