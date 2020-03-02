@@ -52,17 +52,20 @@
         center: 'title',
         right: 'dayGridMonth,dayGridWeek,dayGridDay'
       },
+
       defaultDate: '2020-03-03',
       navLinks: true, // can click day/week names to navigate views
       editable: true,
       eventLimit: true, // allow "more" link when too many events
       events: [
-        @foreach($tasks as $task)
+        @forelse($tasks as $task)
         {
             title : '{{ $task->name }}',
+            description : '{{ $task->description }}',
             start : '{{ $task->sdate }}',
-            end : '{{ $task->edate}}'
-            
+            end : '{{ $task->edate}}',
+            color : '{{ $task->color }}',
+            url : '{{ $task->url }}',
         },
         @endforeach
       ]
@@ -167,28 +170,83 @@
                 <div class="row">
                     <div class="col-md-8" id='calendar'></div>
                     <div class="col-md-4">
-                        <form action="#" method="post">
-                            {{ csrf_field() }}
-                            Task name:
-                            <br />
-                            <input type="text" name="name" />
-                            <br /><br />
-                            Task description:
-                            <br />
-                            <textarea name="description"></textarea>
-                            <br /><br />
-                            Start time:
-                            <br />
-                            <input type="date" name="sdate" class="date" />
-                            <br /><br />
-                            End time:
-                            <br />
-                            <input type="date" name="edate" class="date" />
-                            <br /><br />
-                            <input type="submit" value="Save" />
+                        <form action="/guides/{{$guide->id}}/tasks" method="post">
+                            @csrf
+                            <div>
+                                Task name:
+                                <br />
+                                <input type="text" name="name" />
+                                <br /><br />
+                                Task description:
+                                <br />
+                                <textarea name="description"></textarea>
+                                <br /><br />
+                                Start time:
+                                <br />
+                                <input type="date" name="sdate" class="date" />
+                                <br /><br />
+                                End time:
+                                <br />
+                                <input type="date" name="edate" class="date" />
+                                <br /><br />
+                                <input type="submit" value="Save" />
+                            </div>
                         </form>
                     </div>
                 </div>
+                <div class="container mt-5">
+                @auth
+                    @if (Auth::user()->role == "guide")
+                        <div class="col-md-12">
+                        <h4>Review Appoinments</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                <th scope="col">Task Title</th>
+                                <th scope="col">Start Date</th>
+                                <th scope="col">End Date</th>
+                                <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($tasks as $task)
+                                <tr>
+                                    <td>{{$task->name}}</td>
+                                    <td>{{$task->sdate}}</td>
+                                    <td>{{$task->edate}}</td>
+                                    <td>@if ($task->conform == 0) 
+                                        Unconformed
+                                        @else
+                                        Conformed
+                                        @endif
+                                    </td>
+                                    <td class="d-flex justify-content-center">
+                                        <div>
+                                            <form action="/guides/{{$guide->id}}/tasks/{{$task->id}}" method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="hidden" name="conform" value="1">
+                                                <button class="btn btn-primary mx-4">Conform appointment</button>
+                                            </form>
+                                        </div>
+                                        <div>
+                                            <form action="/tasks/{{$task->id}}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger mx-4">Delete appointment</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @empty  
+                                    <h5>No Appoinments To Review</h5>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                    @endif
+                @endauth
             </div>
         </main>
 

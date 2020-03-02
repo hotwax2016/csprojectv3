@@ -9,7 +9,7 @@ use App\Tourist;
 use App\Guide;
 
 // implements MustVerifyEmail   for email verification
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     use Notifiable;
 

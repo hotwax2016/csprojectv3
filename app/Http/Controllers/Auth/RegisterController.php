@@ -78,6 +78,11 @@ class RegisterController extends Controller
             $user->tourist()->create([
                 'user_id' => $user->id
             ]);
+        } elseif ($user->role == "guide") {
+            $guide = new Guide();
+            $user->guide()->create([
+                'user_id' => $user->id
+            ]);
         }
         return $user;
     }

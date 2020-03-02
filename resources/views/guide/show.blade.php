@@ -19,13 +19,21 @@
                     <div class="tab-pane active" id="profile">
                         <div class="row mb-4">
                             <div class="col-md-6">
-                                <h5 class="mb-3">{{$guide->fname}}'s Profile</h5>
+                                @if ($guide->fname == null)
+                                    <h5 class="mb-3">{{$guide->user->name}}'s Profile</h5>
+                                @else 
+                                    <h5 class="mb-3">{{$guide->fname}}'s Profile</h5>
+                                @endif
                             </div>
                             <div class="col-md-6">
-                                @if(Auth::user()->role == 'guide')
-                                    <a href="" class="btn btn-primary">Create Post</a>
-                                @endif
-                                <a href="/guides/{{$guide->id}}/tasks" class="btn btn-primary">Make Appoinment</a>
+                                @auth
+                                    @if(Auth::user()->role == 'guide')
+                                        <a href="" class="btn btn-primary">Create Post</a>
+                                        <a href="/guides/{{$guide->id}}/tasks" class="btn btn-primary">Review Appointment</a>
+                                    @else 
+                                        <a href="/guides/{{$guide->id}}/tasks" class="btn btn-primary">Make Appointment</a>
+                                    @endif
+                                @endauth
                             </div>
                         </div>
                         <div class="row">
@@ -35,7 +43,7 @@
                                     {{$guide->description}}
                                 </p>
                             </div>
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <h6>Recent badges</h6>
                                 <a href="#" class="badge badge-dark badge-pill">abc</a>
                                 <a href="#" class="badge badge-dark badge-pill">abc</a>
@@ -48,7 +56,7 @@
                                 <hr>
                                 <span class="badge badge-primary"><i class="fa fa-user"></i> 900 Followers</span>
                                 <span class="badge badge-success"><i class="fa fa-cog"></i> 43 posts</span>
-                            </div>
+                            </div> -->
                             <div class="col-md-12 my-5">
                                 <h3 mb-5>Reviews</h3>
                                 @forelse ($guide->reviews as $review)
@@ -68,37 +76,37 @@
                         <!--/row-->
                     </div>
                     <div class="tab-pane" id="edit">
-                        <form method="patch" action="/guides/{{$guide->id}}">
+                        <form method="POST" action="/guides/{{$guide->id}}">
                             @method('PATCH')
                             @csrf
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">First name</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="{{$guide->fname}}">
+                                    <input class="form-control" type="text" name="fname" value="{{$guide->fname}}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">Last name</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="{{$guide->lname}}">
+                                    <input class="form-control" type="text" name="lname" value="{{$guide->lname}}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">Email</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="email" value="{{$guide->user->email}}">
+                                    <input class="form-control" type="email" name="email" value="{{$guide->user->email}}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">License Key </label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="{{$guide->license_key}}">
+                                    <input class="form-control" type="text" name="license_key" value="{{$guide->license_key}}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">License Expire At</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="date" value="{{$guide->license_expire_at}}">
+                                    <input class="form-control" type="date" name="license_expire_at" value="{{$guide->license_expire_at}}">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -115,7 +123,7 @@
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">Contact No</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" type="tel" value="">
+                                    <input class="form-control" name="contact_no" type="tel" value="">
                                 </div>
                             </div>
                             <div class="form-group row">

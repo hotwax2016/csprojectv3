@@ -22,6 +22,7 @@ class CreateTasksTable extends Migration
             $table->date('sdate');
             $table->date('edate');
             $table->boolean('conform')->default(false);
+            $table->string('color')->default('yellow');
             $table->timestamps();
         });
     }

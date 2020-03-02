@@ -24,14 +24,12 @@ class GuideController extends Controller
 
     public function update(Guide $guide, Request $request)
     {
-        dd($data);
-        $data = request()->validate([
+        $data = $request->validate([
             'fname' => 'required',
             'lname' => 'required',
         ]);
-        dd($guide);
-        $tourist->update($data);
+        $guide->update($data);
 
-        return redirect('/guides');
+        return redirect()->back();
     }
 }

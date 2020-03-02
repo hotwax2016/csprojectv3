@@ -49,31 +49,31 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="edit">
-                        <form method="patch" action="/guides/{{$tourist->id}}">
+                        <form method="POST" action="/tourists/{{$tourist->id}}">
                             @method('PATCH')
                             @csrf
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">First name</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" name="fname" type="text" value="">
+                                    <input class="form-control" name="fname" type="text" value="{{$tourist->fname}}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">Last name</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" name="lname" type="text" value="">
+                                    <input class="form-control" name="lname" type="text" value="{{$tourist->lname}}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">Email</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" name="email" type="email" value="">
+                                    <input class="form-control" name="email" type="email" value="{{$tourist->user->email}}" disabled>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-lg-3 col-form-label form-control-label">Contact No</label>
                                 <div class="col-lg-9">
-                                    <input class="form-control" name="contac_no" type="tel" value="">
+                                    <input class="form-control" name="contac_no" type="tel" value="{{$tourist->contact_no}}">
                                 </div>
                             </div>
                             <div class="form-group row">

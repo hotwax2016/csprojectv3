@@ -31,9 +31,11 @@ Route::get('/guides/{guide}', 'GuideController@show');
 Route::patch('/guides/{guide}', 'GuideController@update');
 
 
-Route::get('/guides/{guide}/tasks', 'TasksController@index');
+Route::get('/guides/{guide}/tasks', 'TasksController@index')->middleware('auth');
 Route::get('/guides/{guide}/tasks/create', 'TasksController@create');
 Route::post('/guides/{guide}/tasks', 'TasksController@store');
+Route::put('/guides/{guide}/tasks/{task}', 'TasksController@update');
+Route::delete('/tasks/{task}', 'TasksController@destory');
 
 Route::post('/{guide}/reviews', 'ReviewController@store');
 

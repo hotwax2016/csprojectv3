@@ -20,8 +20,14 @@ class TouristController extends Controller
         return view('tourist.show', compact('tourist'));
     }
 
-    public function store(Request $request)
+    public function update(Tourist $tourist, Request $request)
     {
-        
+        $data = $request->validate([
+            'fname' => 'required',
+            'lname' => 'required',
+        ]);
+        $tourist->update($data);
+
+        return redirect()->back();
     }
 }
